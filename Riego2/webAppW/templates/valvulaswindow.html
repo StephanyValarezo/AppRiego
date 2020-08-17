@@ -1,0 +1,192 @@
+
+
+
+{% extends "base.html" %}
+
+{% load static %}
+
+{% block content %}
+    
+
+        <div class="breadcrumbs">
+            <div class="breadcrumbs-inner">
+                <div class="row m-0">
+                    <div class="col-sm-4">
+                        <div class="page-header float-left">
+                            <div class="page-title">
+                                <h1>Valvulas</h1>
+                                
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col-sm-8">
+                        <div class="page-header float-right">
+                            <div class="page-title">
+                                <ol class="breadcrumb text-right">
+                                    <li><a href="#">Valvulas</a></li>
+                                    <li><a href="#">Programacion</a></li>
+                                    <li class="active">Manual</li>
+                                </ol>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <div class="content">
+            <div class="animated fadeIn">
+                <div class="buttons">
+
+                    <!-- Left Block -->
+                    <div class="row">
+                        <div class="col-md-6">
+                            
+
+                            <!-- Ver estado de sensores-->
+                            <div class="card">
+                                <div class="card-header">
+                                    <strong>Sensores en Loriot</strong>
+                                    <small>Prueba de lecturas
+                                    </small>
+                                </div>
+                                <div class="card-body">
+                                    
+                                    {% for sensor in sensores %}
+
+                                    <p>
+                                        <h3>{{sensor.nombre}}</h3>
+                                        <p>{{sensor.mensaje}}</p>
+                                    </p>
+
+                                    {% endfor %}
+
+                                </div>
+                            </div>
+
+                            <!-- FIN DE Ver estado de sensores-->
+
+
+
+
+
+                            <div class="card">
+                                <div class="card-header">
+                                    <strong>Modo </strong>
+                                    <small>Modo de operacion de las valvulas
+                                    </small>
+                                </div>
+                                <div class="card-body">
+                                    <button type="button" class="btn btn-primary">Manual</button>
+                                    <button type="button" class="btn btn-secondary disabled">Programado</button>
+                                    <button type="button" class="btn btn-success disabled">Automatico</button>
+                                </div>
+                            </div><!-- /# card -->
+
+                            
+
+                            <div class="card">
+                                <div class="card-header">
+                                    <strong>Tipo de valvula</strong>
+                                </div>
+                                <div class="card-body">
+                                    <select name="select" id="select" class="form-control">
+                                        <option value="1">Valvula de riego</option>
+                                        <option value="2">Valvula de paso</option>
+                                    </select>
+                                </div>
+                            </div>
+
+
+                        </div>
+
+                    </div><!-- .row -->
+
+                    <div class="row">
+                        <div class="col-lg-6">
+                            <div class="card">
+                                <div class="card-header">
+                                    <strong class="card-title">Basic Table</strong>
+                                </div>
+                                <div class="card-body">
+                                    <table class="table">
+                                        <thead>
+                                            <tr>
+                                            <th scope="col">#</th>
+                                            <th scope="col">Nombre</th>
+                                            <th scope="col">Sitio</th>
+                                            <th scope="col">Estado</th>
+                                        </tr>
+                                    </thead>
+                                    <tbody>
+
+
+
+
+                                        <form method="POST" action="/valvulas/">{% csrf_token %}
+                                        {% for valvula in valvulas %}
+
+                                           <tr>
+                                                <th scope="row">{{valvula.id}}</th>
+                                                <td>{{valvula.name}}</td>
+                                                <td>{{valvula.codeStateON}}</td>
+                                                <td>
+
+                                                    
+                                                        <label class="toggle-switchy" data-size="xl" data-style="rounded" data-color="green">
+                                                        
+                                                        {% if valvula.state %}
+                                                            <input checked type="checkbox" name="{{valvula.id}}"  id="{{valvula.id}}" >
+
+                                                        {% else %}
+
+                                                            <input type="checkbox" name="{{valvula.id}}"  id="{{valvula.id}}" >
+
+                                                        {% endif %}
+
+                                                        <span class="toggle">
+                                                            <span class="switch"></span>
+                                                        </span>
+                                                        </label>
+
+                                                        
+                                                    
+
+                                                </td>
+                                            </tr>
+                                            {% endfor %}
+
+                                            <td><button type="submit" name="save" value="save" class="btn btn-primary">Enviar</button></td>
+                                            </form>
+
+                                            {% if showSuccesText %}
+                                                <h3 style="color: green"> Cambio Exitoso</h3>
+                                            {% endif %}
+                                            {% if showErrorText %}
+                                                <h3 style="color: red"> Cambio Fallido</h3>
+                                            {% endif %}
+
+                                           
+                                        
+
+
+
+
+                                        
+                                    </tbody>
+                                </table>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+
+                </div> <!-- .buttons -->
+            </div><!-- .animated -->
+        </div><!-- .content -->
+
+    
+
+
+        {% endblock %}
+ 
